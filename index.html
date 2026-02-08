@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0a0a14">
+    <title>✨ For Someone Special ✨</title>
+    <meta name="description" content="A special surprise for someone amazing">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="loader-content">
+            <div class="heart-loader">
+                <div class="heart"></div>
+            </div>
+            <p class="loader-text">Hold on...</p>
+        </div>
+    </div>
+
+    <!-- Floating Elements -->
+    <div class="floating-elements" id="floatingElements"></div>
+
+    <!-- Landing Section -->
+    <section class="landing" id="landing">
+        <div class="landing-overlay"></div>
+        <div class="landing-content">
+            <div class="sparkle-container">
+                <span class="sparkle">✦</span>
+                <span class="sparkle">✧</span>
+                <span class="sparkle">✦</span>
+            </div>
+            <h1 class="landing-title">
+                <span class="title-line">Hey,</span>
+                <span class="title-line accent">Beautiful ✨</span>
+            </h1>
+            <p class="landing-subtitle">Someone made this just for you...</p>
+            <button class="enter-btn" id="enterBtn">
+                <span class="btn-text">See What's Inside</span>
+                <span class="btn-icon">🎁</span>
+            </button>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+
+        <!-- Magic Sari Section - FIRST -->
+        <section class="sari-magic-section" id="sariSection">
+            <div class="magic-bg">
+                <div class="magic-glow"></div>
+            </div>
+
+            <div class="sari-container">
+                <div class="section-header">
+                    <span class="section-icon">🥻</span>
+                    <h2 class="section-title">Magic Wardrobe ✨</h2>
+                    <p class="section-subtitle">Tap to see different sari colors!</p>
+                </div>
+
+                <!-- Sari Photo Display -->
+                <div class="sari-display" id="sariDisplay">
+                    <div class="sari-glow"></div>
+                    <div class="sari-photo-wrapper">
+                        <img src="pic-06.jpg" alt="You in Sari" class="sari-photo" id="sariPhoto">
+                        <div class="sari-frame"></div>
+                    </div>
+                    <div class="sparkle-burst" id="sparkleBurst"></div>
+                </div>
+
+                <!-- Color Dots (6 different sari photos) -->
+                <div class="color-dots" id="colorDots">
+                    <span class="dot active" style="--dot-color: #e91e63" data-img="pic-06.jpg"></span>
+                    <span class="dot" style="--dot-color: #f57c00" data-img="pic-6.png"></span>
+                    <span class="dot" style="--dot-color: #1976d2" data-img="pic-6.1.png"></span>
+                    <span class="dot" style="--dot-color: #d32f2f" data-img="pic-6.2.png"></span>
+                    <span class="dot" style="--dot-color: #7b1fa2" data-img="pic-6.3.png"></span>
+                    <span class="dot" style="--dot-color: #7c4dff" data-img="pic-6.4.png"></span>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Hero Message Section -->
+        <section class="hero-section">
+            <div class="container">
+                <div class="message-card glass-card">
+                    <div class="card-glow"></div>
+                    <span class="message-icon">🌟</span>
+                    <h2 class="message-title">Okay so...</h2>
+                    <p class="message-text">
+                        I was just scrolling through your FB and thought
+                        "why not make something cool?" So here we are.
+                        Don't ask why 😂
+                    </p>
+                    <div class="message-signature">
+                        <span class="signature-heart">⭐</span>
+                        <span class="signature-text">Keep scrolling ↓</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Photo Gallery Section with Sketch Toggle -->
+        <section class="gallery-section" id="gallery">
+            <div class="section-header">
+                <span class="section-icon">📸</span>
+                <h2 class="section-title">Photo Gallery ✏️</h2>
+                <p class="section-subtitle">Tap "Sketch" on any photo to reveal the drawing!</p>
+            </div>
+
+            <div class="gallery-container">
+                <!-- Photo 1 -->
+                <div class="gallery-item photo-sketch-card featured" data-aos="fade-up">
+                    <div class="photo-wrapper">
+                        <img src="pic-01.jpg" alt="Photo 1" class="photo-img active" loading="lazy">
+                        <img src="sctech-1.jpg" alt="Sketch 1" class="sketch-img" loading="lazy">
+                        <div class="photo-compliment">✨ Ethereal</div>
+                        <div class="overlay-toggle">✏️ Sketch</div>
+                    </div>
+                </div>
+
+                <!-- Photo 2 -->
+                <div class="gallery-item photo-sketch-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="photo-wrapper">
+                        <img src="pic-02.jpg" alt="Photo 2" class="photo-img active" loading="lazy">
+                        <img src="scetch-2.jpg" alt="Sketch 2" class="sketch-img" loading="lazy">
+                        <div class="photo-compliment">🌹 Ravishing</div>
+                        <div class="overlay-toggle">✏️ Sketch</div>
+                    </div>
+                </div>
+
+                <!-- Photo 3 -->
+                <div class="gallery-item photo-sketch-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="photo-wrapper">
+                        <img src="pic-03.jpg" alt="Photo 3" class="photo-img active" loading="lazy">
+                        <img src="scetch-3.jpg" alt="Sketch 3" class="sketch-img" loading="lazy">
+                        <div class="photo-compliment">💎 Exquisite</div>
+                        <div class="overlay-toggle">✏️ Sketch</div>
+                    </div>
+                </div>
+
+                <!-- Photo 4 -->
+                <div class="gallery-item photo-sketch-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="photo-wrapper">
+                        <img src="pic-04.jpg" alt="Photo 4" class="photo-img active" loading="lazy">
+                        <img src="scetch-4.jpg" alt="Sketch 4" class="sketch-img" loading="lazy">
+                        <div class="photo-compliment">🌟 Resplendent</div>
+                        <div class="overlay-toggle">✏️ Sketch</div>
+                    </div>
+                </div>
+
+                <!-- Photo 5 -->
+                <div class="gallery-item photo-sketch-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="photo-wrapper">
+                        <img src="pic-05.jpg" alt="Photo 5" class="photo-img active" loading="lazy">
+                        <img src="scetch-5.jpg" alt="Sketch 5" class="sketch-img" loading="lazy">
+                        <div class="photo-compliment">🦢 Graceful</div>
+                        <div class="overlay-toggle">✏️ Sketch</div>
+                    </div>
+                </div>
+
+                <!-- Photo 7 -->
+                <div class="gallery-item photo-sketch-card featured" data-aos="fade-up" data-aos-delay="100">
+                    <div class="photo-wrapper">
+                        <img src="pic-07.png" alt="Photo 7" class="photo-img active" loading="lazy">
+                        <img src="scetch-7.png" alt="Sketch 7" class="sketch-img" loading="lazy">
+                        <div class="photo-compliment">🔥 Stunning</div>
+                        <div class="overlay-toggle">✏️ Sketch</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reasons Section -->
+        <section class="reasons-section" id="reasons">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-icon">💭</span>
+                    <h2 class="section-title">Random Observations</h2>
+                    <p class="section-subtitle">Things I've noticed about you 👀</p>
+                </div>
+
+                <div class="reasons-grid">
+                    <div class="reason-card glass-card" data-aos="zoom-in">
+                        <span class="reason-number">01</span>
+                        <span class="reason-icon">😊</span>
+                        <h3>The Smile</h3>
+                        <p>When you smile it's like the whole room gets brighter. Not even exaggerating.</p>
+                    </div>
+                    <div class="reason-card glass-card" data-aos="zoom-in" data-aos-delay="100">
+                        <span class="reason-number">02</span>
+                        <span class="reason-icon">⚡</span>
+                        <h3>The Energy</h3>
+                        <p>You've got this aura that just makes people wanna vibe with you. It's a talent fr.</p>
+                    </div>
+                    <div class="reason-card glass-card" data-aos="zoom-in" data-aos-delay="200">
+                        <span class="reason-number">03</span>
+                        <span class="reason-icon">✨</span>
+                        <h3>The Look</h3>
+                        <p>How do you manage to look this good in literally every photo? Teach us 😭</p>
+                    </div>
+                    <div class="reason-card glass-card" data-aos="zoom-in" data-aos-delay="300">
+                        <span class="reason-number">04</span>
+                        <span class="reason-icon">🎭</span>
+                        <h3>The Personality</h3>
+                        <p>You're actually funny and interesting. That's rare these days lol.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Photo Modal -->
+    <div class="photo-modal" id="photoModal">
+        <button class="modal-close" id="modalClose">×</button>
+        <div class="modal-content">
+            <img src="" alt="Full size photo" id="modalImage">
+        </div>
+        <button class="modal-nav modal-prev" id="modalPrev">‹</button>
+        <button class="modal-nav modal-next" id="modalNext">›</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
