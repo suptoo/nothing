@@ -245,10 +245,28 @@
         if (!sariDisplay || !sariPhoto || colorDots.length === 0) return;
 
         let currentIndex = 0;
+        let isAnimating = false; // Lock to prevent overlapping animations
+        const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+        // PRELOAD all sari images so they switch instantly
+        const preloadedImages = {};
+        colorDots.forEach(dot => {
+            const src = dot.getAttribute('data-img');
+            if (src) {
+                const img = new Image();
+                img.src = src;
+                preloadedImages[src] = img;
+            }
+        });
+
+        // Set initial transition on the photo
+        sariPhoto.style.transition = 'opacity 0.3s ease, transform 0.35s cubic-bezier(0.34,1.56,0.64,1), filter 0.3s ease';
 
         function changeSari(index) {
             const dot = colorDots[index];
-            if (!dot || index === currentIndex) return;
+            if (!dot || index === currentIndex || isAnimating) return;
+
+            isAnimating = true; // LOCK animation
 
             const imgSrc = dot.getAttribute('data-img');
             const color = getComputedStyle(dot).getPropertyValue('--dot-color').trim() || '#e91e63';
@@ -257,10 +275,10 @@
             // Add magic swirl class
             if (wrapper) wrapper.classList.add('magic-changing');
 
-            // Phase 1: Shrink + rotate + fade out with glow flash
+            // Phase 1: Fade out current photo
             sariPhoto.style.opacity = '0';
-            sariPhoto.style.transform = 'scale(0.7) rotate(8deg)';
-            sariPhoto.style.filter = `brightness(2) blur(4px)`;
+            sariPhoto.style.transform = 'scale(0.85) rotate(4deg)';
+            sariPhoto.style.filter = 'brightness(1.8) blur(3px)';
 
             // Flash the glow with the new color
             if (sariGlow) {
@@ -270,33 +288,39 @@
                 sariGlow.style.background = `radial-gradient(circle, ${color} 0%, transparent 70%)`;
             }
 
-            // Fire ring particles around the photo
+            // Particles (fewer on mobile)
             createMagicRing(color);
 
+            // Phase 2: Swap image after fade-out, then fade in
             setTimeout(() => {
-                // Change image source
+                // Use preloaded image - instant switch
                 sariPhoto.src = imgSrc;
 
-                // Phase 2: Grow back in with bounce
-                sariPhoto.style.filter = 'brightness(1.3) blur(0px)';
-                sariPhoto.style.opacity = '1';
-                sariPhoto.style.transform = 'scale(1.08) rotate(-2deg)';
+                // Small delay to let browser paint the new image
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        // Fade in with bounce
+                        sariPhoto.style.opacity = '1';
+                        sariPhoto.style.transform = 'scale(1.05) rotate(-1deg)';
+                        sariPhoto.style.filter = 'brightness(1.1) blur(0px)';
 
-                // Glow settles
-                if (sariGlow) {
-                    sariGlow.style.transition = 'all 0.6s ease';
-                    sariGlow.style.opacity = '0.5';
-                    sariGlow.style.transform = 'scale(1)';
-                }
+                        // Glow settles
+                        if (sariGlow) {
+                            sariGlow.style.transition = 'all 0.5s ease';
+                            sariGlow.style.opacity = '0.5';
+                            sariGlow.style.transform = 'scale(1)';
+                        }
 
-                // Phase 3: Settle into place
-                setTimeout(() => {
-                    sariPhoto.style.filter = 'none';
-                    sariPhoto.style.transform = 'scale(1) rotate(0deg)';
-                    if (wrapper) wrapper.classList.remove('magic-changing');
-                }, 300);
-
-            }, 350);
+                        // Phase 3: Settle into final position
+                        setTimeout(() => {
+                            sariPhoto.style.filter = 'none';
+                            sariPhoto.style.transform = 'scale(1) rotate(0deg)';
+                            if (wrapper) wrapper.classList.remove('magic-changing');
+                            isAnimating = false; // UNLOCK
+                        }, 300);
+                    });
+                });
+            }, 300);
 
             // Update active dot with pop effect
             colorDots.forEach((d, i) => {
@@ -310,8 +334,10 @@
             // Create sparkle burst
             createSparkleBurst();
 
-            // Floating emoji shower
-            createEmojiShower();
+            // Floating emoji shower (skip on mobile to reduce lag)
+            if (!isMobile) {
+                createEmojiShower();
+            }
 
             // Haptic feedback
             if (navigator.vibrate) {
@@ -327,7 +353,7 @@
             const cx = display.left + display.width / 2;
             const cy = display.top + display.height / 2;
             const radius = Math.max(display.width, display.height) / 2 + 20;
-            const count = 16;
+            const count = isMobile ? 8 : 16;
 
             for (let i = 0; i < count; i++) {
                 const angle = (i / count) * Math.PI * 2;
@@ -480,9 +506,6 @@
             0% { opacity: 0; transform: translateY(0) scale(0.3) rotate(0deg); }
             20% { opacity: 1; transform: translateY(10px) scale(1.1) rotate(20deg); }
             100% { opacity: 0; transform: translateY(120px) scale(0.5) rotate(-30deg); }
-        }
-        .sari-photo {
-            transition: opacity 0.35s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.35s ease;
         }
         .magic-changing {
             box-shadow: 0 0 60px rgba(233, 30, 99, 0.6), 0 0 120px rgba(233, 30, 99, 0.3) !important;
