@@ -28,6 +28,8 @@
         href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <!-- Preload the first visible sari image for instant display -->
+    <link rel="preload" href="pic-06.jpg" as="image">
 </head>
 
 <body>
@@ -90,12 +92,18 @@
                 <div class="sari-display" id="sariDisplay">
                     <div class="sari-glow"></div>
                     <div class="sari-photo-wrapper">
-                        <img src="pic-06.jpg" alt="Pink Sari" class="sari-photo active" data-index="0">
-                        <img src="pic-6.png" alt="Orange Sari" class="sari-photo" data-index="1">
-                        <img src="pic-6.1.png" alt="Blue Sari" class="sari-photo" data-index="2">
-                        <img src="pic-6.2.png" alt="Red Sari" class="sari-photo" data-index="3">
-                        <img src="pic-6.3.png" alt="Purple Sari" class="sari-photo" data-index="4">
-                        <img src="pic-6.4.png" alt="Violet Sari" class="sari-photo" data-index="5">
+                        <img src="pic-06.jpg" alt="Pink Sari" class="sari-photo active" data-index="0"
+                            fetchpriority="high" decoding="async">
+                        <img src="pic-6.jpg" alt="Orange Sari" class="sari-photo" data-index="1" loading="lazy"
+                            decoding="async">
+                        <img src="pic-6.1.jpg" alt="Blue Sari" class="sari-photo" data-index="2" loading="lazy"
+                            decoding="async">
+                        <img src="pic-6.2.jpg" alt="Red Sari" class="sari-photo" data-index="3" loading="lazy"
+                            decoding="async">
+                        <img src="pic-6.3.jpg" alt="Purple Sari" class="sari-photo" data-index="4" loading="lazy"
+                            decoding="async">
+                        <img src="pic-6.4.jpg" alt="Violet Sari" class="sari-photo" data-index="5" loading="lazy"
+                            decoding="async">
                         <div class="sari-frame"></div>
                     </div>
                     <div class="sparkle-burst" id="sparkleBurst"></div>
@@ -104,11 +112,11 @@
                 <!-- Color Dots (6 different sari photos) -->
                 <div class="color-dots" id="colorDots">
                     <span class="dot active" style="--dot-color: #e91e63" data-img="pic-06.jpg"></span>
-                    <span class="dot" style="--dot-color: #f57c00" data-img="pic-6.png"></span>
-                    <span class="dot" style="--dot-color: #1976d2" data-img="pic-6.1.png"></span>
-                    <span class="dot" style="--dot-color: #d32f2f" data-img="pic-6.2.png"></span>
-                    <span class="dot" style="--dot-color: #7b1fa2" data-img="pic-6.3.png"></span>
-                    <span class="dot" style="--dot-color: #7c4dff" data-img="pic-6.4.png"></span>
+                    <span class="dot" style="--dot-color: #f57c00" data-img="pic-6.jpg"></span>
+                    <span class="dot" style="--dot-color: #1976d2" data-img="pic-6.1.jpg"></span>
+                    <span class="dot" style="--dot-color: #d32f2f" data-img="pic-6.2.jpg"></span>
+                    <span class="dot" style="--dot-color: #7b1fa2" data-img="pic-6.3.jpg"></span>
+                    <span class="dot" style="--dot-color: #7c4dff" data-img="pic-6.4.jpg"></span>
                 </div>
 
             </div>
@@ -196,8 +204,8 @@
                 <!-- Photo 7 -->
                 <div class="gallery-item photo-sketch-card featured" data-aos="fade-up" data-aos-delay="100">
                     <div class="photo-wrapper">
-                        <img src="pic-07.png" alt="Photo 7" class="photo-img active" loading="lazy">
-                        <img src="scetch-7.png" alt="Sketch 7" class="sketch-img" loading="lazy">
+                        <img src="pic-07.jpg" alt="Photo 7" class="photo-img active" loading="lazy">
+                        <img src="scetch-7.jpg" alt="Sketch 7" class="sketch-img" loading="lazy">
                         <div class="photo-compliment">🔥 Stunning</div>
                         <div class="overlay-toggle">✏️ Sketch</div>
                     </div>

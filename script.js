@@ -32,7 +32,7 @@
         if (!preloader) return;
 
         const hidePreloader = () => {
-            setTimeout(() => preloader.classList.add('hidden'), 1500);
+            setTimeout(() => preloader.classList.add('hidden'), 800);
         };
 
         if (document.readyState === 'complete') {
@@ -41,7 +41,7 @@
             window.addEventListener('load', hidePreloader);
         }
 
-        setTimeout(() => preloader.classList.add('hidden'), 4000);
+        setTimeout(() => preloader.classList.add('hidden'), 3000);
     }
 
     // ========================================
