@@ -869,6 +869,7 @@ img {
     filter: blur(40px);
     transition: all 0.5s ease;
     animation: sariGlow 3s ease-in-out infinite alternate;
+    pointer-events: none;
 }
 
 @keyframes sariGlow {
@@ -1005,6 +1006,8 @@ img {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 30px;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    z-index: 5;
 }
 
 .dot {
@@ -1980,13 +1983,11 @@ img {
         box-shadow: var(--shadow-glow);
     }
 
-    .sari-display:hover .sari-photo-wrapper,
-    .sari-display:active .sari-photo-wrapper {
+    .sari-display:hover .sari-photo-wrapper {
         transform: none;
     }
 
-    .sari-display:hover .sari-photo,
-    .sari-display:active .sari-photo {
+    .sari-display:hover .sari-photo {
         transform: none;
     }
 
