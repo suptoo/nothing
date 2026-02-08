@@ -237,48 +237,23 @@
     // ========================================
     function initSariMagic() {
         const sariDisplay = document.getElementById('sariDisplay');
-        const sariPhoto = document.getElementById('sariPhoto');
+        const sariPhotos = document.querySelectorAll('.sari-photo');
         const sparkleBurst = document.getElementById('sparkleBurst');
         const colorDots = document.querySelectorAll('.color-dots .dot');
         const sariGlow = document.querySelector('.sari-glow');
 
-        if (!sariDisplay || !sariPhoto || colorDots.length === 0) return;
+        if (!sariDisplay || sariPhotos.length === 0 || colorDots.length === 0) return;
 
         let currentIndex = 0;
-        let isAnimating = false; // Lock to prevent overlapping animations
-        const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-
-        // PRELOAD all sari images so they switch instantly
-        const preloadedImages = {};
-        colorDots.forEach(dot => {
-            const src = dot.getAttribute('data-img');
-            if (src) {
-                const img = new Image();
-                img.src = src;
-                preloadedImages[src] = img;
-            }
-        });
-
-        // Set initial transition on the photo
-        sariPhoto.style.transition = 'opacity 0.3s ease, transform 0.35s cubic-bezier(0.34,1.56,0.64,1), filter 0.3s ease';
+        let isAnimating = false;
 
         function changeSari(index) {
-            const dot = colorDots[index];
-            if (!dot || index === currentIndex || isAnimating) return;
+            if (index === currentIndex || isAnimating) return;
+            if (index < 0 || index >= sariPhotos.length) return;
 
-            isAnimating = true; // LOCK animation
+            isAnimating = true;
 
-            const imgSrc = dot.getAttribute('data-img');
-            const color = getComputedStyle(dot).getPropertyValue('--dot-color').trim() || '#e91e63';
-            const wrapper = document.querySelector('.sari-photo-wrapper');
-
-            // Add magic swirl class
-            if (wrapper) wrapper.classList.add('magic-changing');
-
-            // Phase 1: Fade out current photo
-            sariPhoto.style.opacity = '0';
-            sariPhoto.style.transform = 'scale(0.85) rotate(4deg)';
-            sariPhoto.style.filter = 'brightness(1.8) blur(3px)';
+            const color = getComputedStyle(colorDots[index]).getPropertyValue('--dot-color').trim() || '#e91e63';
 
             // Flash the glow with the new color
             if (sariGlow) {
@@ -288,56 +263,27 @@
                 sariGlow.style.background = `radial-gradient(circle, ${color} 0%, transparent 70%)`;
             }
 
-            // Particles (fewer on mobile)
-            createMagicRing(color);
+            // Hide current photo, show new one
+            sariPhotos[currentIndex].classList.remove('active');
+            sariPhotos[index].classList.add('active');
 
-            // Phase 2: Swap image after fade-out, then fade in
-            setTimeout(() => {
-                // Use preloaded image - instant switch
-                sariPhoto.src = imgSrc;
-
-                // Small delay to let browser paint the new image
-                requestAnimationFrame(() => {
-                    requestAnimationFrame(() => {
-                        // Fade in with bounce
-                        sariPhoto.style.opacity = '1';
-                        sariPhoto.style.transform = 'scale(1.05) rotate(-1deg)';
-                        sariPhoto.style.filter = 'brightness(1.1) blur(0px)';
-
-                        // Glow settles
-                        if (sariGlow) {
-                            sariGlow.style.transition = 'all 0.5s ease';
-                            sariGlow.style.opacity = '0.5';
-                            sariGlow.style.transform = 'scale(1)';
-                        }
-
-                        // Phase 3: Settle into final position
-                        setTimeout(() => {
-                            sariPhoto.style.filter = 'none';
-                            sariPhoto.style.transform = 'scale(1) rotate(0deg)';
-                            if (wrapper) wrapper.classList.remove('magic-changing');
-                            isAnimating = false; // UNLOCK
-                        }, 300);
-                    });
-                });
-            }, 300);
-
-            // Update active dot with pop effect
+            // Update active dot
             colorDots.forEach((d, i) => {
                 d.classList.toggle('active', i === index);
-                if (i === index) {
-                    d.style.transform = 'scale(1.5)';
-                    setTimeout(() => { d.style.transform = ''; }, 300);
-                }
             });
 
-            // Create sparkle burst
-            createSparkleBurst();
+            // Glow settles after a moment
+            setTimeout(() => {
+                if (sariGlow) {
+                    sariGlow.style.transition = 'all 0.5s ease';
+                    sariGlow.style.opacity = '0.5';
+                    sariGlow.style.transform = 'scale(1)';
+                }
+                isAnimating = false;
+            }, 400);
 
-            // Floating emoji shower (skip on mobile to reduce lag)
-            if (!isMobile) {
-                createEmojiShower();
-            }
+            // Sparkle burst
+            createSparkleBurst();
 
             // Haptic feedback
             if (navigator.vibrate) {
@@ -347,65 +293,12 @@
             currentIndex = index;
         }
 
-        // Magic ring particles around the sari photo
-        function createMagicRing(color) {
-            const display = sariDisplay.getBoundingClientRect();
-            const cx = display.left + display.width / 2;
-            const cy = display.top + display.height / 2;
-            const radius = Math.max(display.width, display.height) / 2 + 20;
-            const count = isMobile ? 8 : 16;
-
-            for (let i = 0; i < count; i++) {
-                const angle = (i / count) * Math.PI * 2;
-                const particle = document.createElement('div');
-                const x = cx + Math.cos(angle) * radius;
-                const y = cy + Math.sin(angle) * radius;
-                const dx = Math.cos(angle) * 40;
-                const dy = Math.sin(angle) * 40;
-
-                particle.style.cssText = `
-                    position: fixed; left: ${x}px; top: ${y}px;
-                    width: 6px; height: 6px; border-radius: 50%;
-                    background: ${color}; pointer-events: none;
-                    z-index: 9999; box-shadow: 0 0 8px ${color};
-                    animation: magic-particle 0.6s ease-out forwards;
-                    --dx: ${dx}px; --dy: ${dy}px;
-                `;
-                document.body.appendChild(particle);
-                setTimeout(() => particle.remove(), 700);
-            }
-        }
-
-        // Emoji shower effect
-        function createEmojiShower() {
-            const emojis = ['✨', '🌟', '💫', '⭐', '🥻', '💖', '🔮', '🪄'];
-            const display = sariDisplay.getBoundingClientRect();
-
-            for (let i = 0; i < 8; i++) {
-                const emoji = document.createElement('div');
-                emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-                const x = display.left + Math.random() * display.width;
-                const startY = display.top - 20;
-
-                emoji.style.cssText = `
-                    position: fixed; left: ${x}px; top: ${startY}px;
-                    pointer-events: none; font-size: ${1 + Math.random() * 0.8}rem;
-                    z-index: 9999; opacity: 1;
-                    animation: emoji-fall ${0.8 + Math.random() * 0.6}s ease-in forwards;
-                    animation-delay: ${i * 0.06}s;
-                `;
-                document.body.appendChild(emoji);
-                setTimeout(() => emoji.remove(), 1600);
-            }
-        }
-
         function createSparkleBurst() {
             if (!sparkleBurst) return;
-
             sparkleBurst.innerHTML = '';
 
             const sparkles = ['✨', '⭐', '💫', '🌟', '💖', '🥻'];
-            const numSparkles = 12;
+            const numSparkles = 10;
 
             for (let i = 0; i < numSparkles; i++) {
                 const sparkle = document.createElement('div');
@@ -424,16 +317,12 @@
                 sparkleBurst.appendChild(sparkle);
             }
 
-            setTimeout(() => {
-                sparkleBurst.innerHTML = '';
-            }, 1000);
+            setTimeout(() => { sparkleBurst.innerHTML = ''; }, 1000);
         }
 
         // Click on photo to cycle saris
         sariDisplay.addEventListener('click', (e) => {
-            // Don't cycle if clicking on dots
             if (e.target.classList.contains('dot')) return;
-
             const nextIndex = (currentIndex + 1) % colorDots.length;
             changeSari(nextIndex);
         });

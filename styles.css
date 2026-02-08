@@ -898,11 +898,21 @@ img {
 }
 
 .sari-photo {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center top;
-    /* Transitions handled by JS for magic effect */
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.sari-photo.active {
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .photo-frame {
