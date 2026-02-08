@@ -380,12 +380,19 @@ img {
    MAIN CONTENT
 ======================================== */
 .main-content {
-    display: none;
+    position: absolute;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
     background: var(--bg-dark);
 }
 
 .main-content.visible {
-    display: block;
+    position: relative;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
     animation: fadeIn 1s;
 }
 
@@ -907,7 +914,7 @@ img {
     object-fit: cover;
     object-position: center top;
     opacity: 0;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.15s ease;
     pointer-events: none;
 }
 

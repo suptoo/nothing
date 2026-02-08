@@ -280,7 +280,7 @@
                     sariGlow.style.transform = 'scale(1)';
                 }
                 isAnimating = false;
-            }, 400);
+            }, 150);
 
             // Sparkle burst
             createSparkleBurst();
